@@ -14,7 +14,7 @@ def _log(message):
 
 import requests
 
-
+from transliterate import translit, get_available_language_codes
 url = 'https://raw.githubusercontent.com/belka861/fx_message/main/phrases.txt'
 r = requests.get(url, allow_redirects=True)
 open('phrases.txt', 'wb').write(r.content)
@@ -30,6 +30,9 @@ open('countries.txt', 'wb').write(r.content)
 url = 'https://raw.githubusercontent.com/belka861/fx_websocket/main/surnames_f.txt'
 r = requests.get(url, allow_redirects=True)
 open('surnames_f.txt', 'wb').write(r.content)
+
+with open('nyse-listed.csv', 'r') as file:
+    nyse = file.readlines()
 
 
 
@@ -53,7 +56,9 @@ while True:
     #print(data)
     surname=data[random.randint(1,len(data)-1)].replace('\n', '')
 #    _log(surname)
-
+    tick=nyse[random.randint(1,len(nyse)-1)].replace('\n', '')
+#    print (tick)
+#    sys.exit()
 
     with open('countries.txt', 'r') as file:
         data = file.readlines()
@@ -78,8 +83,14 @@ while True:
         final_name=name+" "+surname
     if (dice==3):
         final_name=surname+" "+name
-
+#    sys.exit()
 #    _log(final_name)
+
+
+    dice=random.choice([1,2,3,4,5,6,7,8,9,20])
+    if (dice==5):
+        question="Мне аналитик посоветовал купить акции "+tick+" А ОНИ СЕГОДНЯ ОБВАЛИЛИСЬ! ВЕРНИТЕ МНЕ МОИ ДЕНЬГИ!!!"
+
 
 
     domains=['mail.ru','yandex.ru', 'rambler.ru', 'outlook.com', 'gmail.com', 'hotmail.com', 'list.ru', 'bk.ru', 'inbox.ru', 'internet.ru',  'yahoo.com', 'aol.com', 'e1.ru','inbox.lv', 'dino.lv','human.lv', 'fit.lv','sok.lv', 'eclub.lv', 'zohomail.com', 'protonmail.com', 'mail.com', 'usa.com', 'counsellor.com', 'cyberservices.com', 'protestant.com']
@@ -88,6 +99,9 @@ while True:
         password=password+random.choice('01234567890')
 
     username=generate_username(1)[0]+password
+    username=translit(final_name, reversed=True).replace(" ", "_").replace("'","").lower()+password
+#    print(username)
+#    sys.exit()
     domain=random.choice(domains)
     email=username+"@"+domain
 #    _log (email)
