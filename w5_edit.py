@@ -89,7 +89,7 @@ while True:
 
     dice=random.choice([1,2,3,4,5,6,7,8,9,20])
     if (dice==5):
-        question="Мне аналитик посоветовал купить акции "+tick+" А ОНИ СЕГОДНЯ ОБВАЛИЛИСЬ! ВЕРНИТЕ МНЕ МОИ ДЕНЬГИ!!!"
+        question="РњРЅРµ Р°РЅР°Р»РёС‚РёРє РїРѕСЃРѕРІРµС‚РѕРІР°Р» РєСѓРїРёС‚СЊ Р°РєС†РёРё "+tick+" Рђ РћРќР РЎР•Р“РћР”РќРЇ РћР‘Р’РђР›РР›РРЎР¬! Р’Р•Р РќРРўР• РњРќР• РњРћР Р”Р•РќР¬Р“Р!!!"
 
 
 
@@ -110,8 +110,9 @@ while True:
 #sys.exit()
     websocket.enableTrace(False)
     ws = websocket.WebSocket()
+    ws2 = websocket.WebSocket()
     ws.connect("wss://node231.jivosite.com/cometcn", origin="testing_websockets.com")
-
+    ws2.connect("wss://node103.jivosite.com/cometcn", origin="testing_websockets.com")
 #    ws.connect("wss://node-eu1-b-1.jivosite.com/cometcn", origin="testing_websockets.com")
 
 #wss://node-eu1-b-1.jivosite.com/cometcn
@@ -119,8 +120,10 @@ while True:
 #test below
 
     ws.send('{"name":"startup","jv_widget_id":"KSPtF7hWOu","site_id":1576660,"current_page":{"title":"24xFOREX","url":"https://24xforex.com/"},"is_mobile":false,"visits_count":1,"page_visible":true,"chat_opened":true,"widget_version":"32.4.0","history":[{"url":"https://24xforex.com/","title":"24xFOREX","time":'+str(t)+'}],"new_utm":{"campaign":"(direct)","source":"(direct)"},"visitor_id":"f07d59bbc15f5547"}')
+    ws2.send('{"name":"startup","jv_widget_id":"CJ3NNhuoCA","site_id":1562477,"current_page":{"title":"Ingoinvest","url":"https://ingoinvest.com/ru"},"is_mobile":false,"visits_count":1,"page_visible":true,"chat_opened":true,"widget_version":"32.4.0","history":[{"url":"https://ingoinvest.com/","title":"Ingoinvest","time":1620538442796},{"url":"https://ingoinvest.com/ru","title":"Ingoinvest","time":1620538511296},{"url":"https://ingoinvest.com/ru/register","title":"Ingoinvest - Ingoinvest","time":1619651663124},{"url":"https://ingoinvest.com/#contact","title":"Ingoinvest","time":1619651013371}],"new_utm":{"campaign":"(direct)","source":"(direct)"},"visitor_id":"a81f44fa643251a2"}')
 #                                                                                                                                                                                                                                                      1619908687848
     _log(ws.recv())
+    _log(ws2.recv())
 #time.sleep(1)
 #ws.send('.')
 #print(ws.recv())
@@ -130,9 +133,11 @@ while True:
     m='{"name":"introduction","client_name":"'+final_name+'","phone":"'+tnf+'","email":"'+email+'","description":null,"accept_eula":null}'
     _log(m)
     ws.send(m)
+    ws2.send(m)
     m='{"name":"client_message","message":"'+question+'","private_id":"a2143b95-a0bd-7990-69cd-1a70f4235961"}'
     _log(m)
     ws.send(m)
+    ws2.send(m)
 
 #ws.send('{"name":"introduction","client_name":"'+final_name+'","phone":"'+tnf+'","email":"'+email+'","description":null,"accept_eula":null}')
 #ws.send('{"name":"client_message","message":"'+question+'","private_id":"a2143b95-a0bd-7990-69cd-1a70f4235961"}')
@@ -140,6 +145,11 @@ while True:
     _log(ws.recv())
     _log(ws.recv())
     _log(ws.recv())
+    _log(ws2.recv())
+    _log(ws2.recv())
+    _log(ws2.recv())
+
+
 #print(ws.recv())
 #print(ws.recv())
 #    sys.exit()
